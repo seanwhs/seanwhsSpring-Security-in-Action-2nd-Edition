@@ -13,14 +13,14 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class ProjectConfig {
-
+    //choose authenticated or permit all
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(request->request
             .anyRequest()
-            .authenticated()
-            // .permitAll()
+            // .authenticated()
+            .permitAll()
         );
         return http.build();
     }
