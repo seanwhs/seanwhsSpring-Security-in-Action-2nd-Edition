@@ -1,8 +1,9 @@
 //ProjectConfig.java
-package chapter8.exercise1.security;
+package chapter8.exercise2.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -36,18 +37,17 @@ public class ProjectConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    //Making other requests accessible for all authenticated users
+    //Authorization configuration for the first scenario, /a
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(c -> c
-                        .requestMatchers("/hello", "/niHao")
-                        .hasRole("ADMIN")
-                        .requestMatchers("/ciao")
-                        .hasRole("MANAGER")
-                        .anyRequest()
-                        // .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/a")
                         .authenticated()
+                        .requestMatchers(HttpMethod.POST, "/a")
+                        .permitAll()
+                        .anyRequest()
+                        .denyAll()
                         );
         http.csrf(c->c.disable());
         return http.build();
