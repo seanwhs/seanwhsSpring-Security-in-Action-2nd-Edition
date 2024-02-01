@@ -1,9 +1,7 @@
 //ProjectConfig.java
 package chapter8.exercise2.security;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -43,10 +41,10 @@ public class ProjectConfig {
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(
             c -> c
-            .requestMatchers("/product/{code:^[0-9]*$}")
-            .permitAll()
-            .anyRequest()
-            .denyAll()
+                .requestMatchers("/email/{email:.*(?:.+@.+\\.com)}" )
+                .permitAll()
+                .anyRequest()
+                .denyAll()
             );
         return http.build();
     }
