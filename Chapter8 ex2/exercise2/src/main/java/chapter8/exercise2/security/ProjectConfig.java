@@ -37,17 +37,15 @@ public class ProjectConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    //Authorization configuration for the first scenario, /a
+    // Changes in the configuration class for multiple paths
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
         http.authorizeHttpRequests(c -> c
-                        .requestMatchers(HttpMethod.GET, "/a")
+                        .requestMatchers( "/a/b/**")
                         .authenticated()
-                        .requestMatchers(HttpMethod.POST, "/a")
-                        .permitAll()
                         .anyRequest()
-                        .denyAll()
+                        .permitAll()
                         );
         http.csrf(c->c.disable());
         return http.build();
