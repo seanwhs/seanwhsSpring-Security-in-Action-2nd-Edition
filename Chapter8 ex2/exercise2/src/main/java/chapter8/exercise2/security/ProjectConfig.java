@@ -37,17 +37,17 @@ public class ProjectConfig {
         return NoOpPasswordEncoder.getInstance();
     }
 
-    // Changes in the configuration class for multiple paths
+    //  Configuring the authorization to permit only specific digits
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.httpBasic(Customizer.withDefaults());
-        http.authorizeHttpRequests(c -> c
-                        .requestMatchers( "/a/b/**")
-                        .authenticated()
-                        .anyRequest()
-                        .permitAll()
-                        );
-        http.csrf(c->c.disable());
+        http.authorizeHttpRequests(
+            c -> c
+            .requestMatchers("/product/{code:^[0-9]*$}")
+            .permitAll()
+            .anyRequest()
+            .denyAll()
+            );
         return http.build();
     }
 }
