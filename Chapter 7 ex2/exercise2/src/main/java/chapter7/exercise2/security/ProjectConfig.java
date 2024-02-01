@@ -46,7 +46,8 @@ public class ProjectConfig {
 
         http.authorizeHttpRequests(
                 
-                c -> c.anyRequest().hasRole("ADMIN")); // restrict access to ADMIN
+                // c -> c.anyRequest().hasRole("ADMIN")); // restrict access to ADMIN
+                c -> c.anyRequest().denyAll()); // LOCKDOWN--deny ALL access
 
         return http.build();
     }
